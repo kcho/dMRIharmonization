@@ -27,7 +27,13 @@ config.read(f'/tmp/harm_config_{os.getpid()}.ini')
 N_shm = int(config['DEFAULT']['N_shm'])
 N_proc = int(config['DEFAULT']['N_proc'])
 diffusionMeasures= [x for x in config['DEFAULT']['diffusionMeasures'].split(',')]
-travelHeads= bool(config['DEFAULT']['travelHeads'])
+travelHeads= (config['DEFAULT']['travelHeads'])
+
+def printDefaultConfig():
+    print("travelHeads: ", travelHeads)
+    print("diffusionMeasures: ", diffusionMeasures)
+    print("N_proc: ", N_proc)
+    print("N_shm: ", N_shm)
 
 def applyXform(inImg, refImg, warp, trans, outImg):
 
@@ -183,7 +189,6 @@ def stat_calc(ref, target, mask):
     np.nan_to_num(per_diff).clip(max=100., min=-100., out= per_diff)
     per_diff_smooth= smooth(per_diff)
     scale= ref/(target+eps)
-    scale.clip(max=10., min= 0., out= scale)
 
     return (delta, per_diff, per_diff_smooth, scale)
 
@@ -210,7 +215,7 @@ def difference_calc(refSite, targetSite, refImgs, targetImgs,
         per_diff=[]
         per_diff_smooth= []
         scale= []
-        if travelHeads:
+        if travelHeads==0:
             for refImg, targetImg in zip(refImgs, targetImgs):
                 prefix = os.path.basename(refImg).split('.')[0]
                 ref= load_nifti(os.path.join(templatePath, f'{prefix}_Warped{dm}.nii.gz'))[0]

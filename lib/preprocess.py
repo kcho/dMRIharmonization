@@ -143,6 +143,8 @@ def preprocessing(imgPath, maskPath):
         if (abs(sp_high-lowResImgHdr['pixdim'][1:4])>10e-3).any():
             imgPath, maskPath = \
                 resampling(imgPath, maskPath, lowResImg, lowResImgHdr, lowResMask, lowResMaskHdr, sp_high, bvals)
+            #maskPath= maskPath.split('.')[0] + '_resampled.nii.gz'
+            #imgPath = imgPath.split('.')[0]+'_resampled.nii.gz'
             suffix = '_resampled'
 
 

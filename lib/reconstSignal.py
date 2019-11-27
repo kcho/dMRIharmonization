@@ -75,13 +75,15 @@ def findLargestConnectMask(img, mask):
 
     mask_scale = label(img > 0.00001, connectivity=1)
     maxArea = 0
+    maxLabel = -1
     for region in regionprops(mask_scale):
         if region.area > maxArea:
             maxLabel = region.label
             maxArea = region.area
 
-    largeConnectMask = (mask_scale == maxLabel)
-    mask *= largeConnectMask
+    if maxLabel !=-1:
+        largeConnectMask = (mask_scale == maxLabel)
+        mask *= largeConnectMask
 
     return mask
 

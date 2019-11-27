@@ -192,8 +192,11 @@ class pipeline(cli.Application):
     def createTemplate(self):
 
         from buildTemplate import difference_calc, antsMult, warp_bands, \
-            dti_stat, rish_stat, template_masking, createAntsCaselist
+            dti_stat, rish_stat, template_masking, createAntsCaselist, printDefaultConfig
         from preprocess import common_processing
+
+        # check initialization
+        printDefaultConfig()
 
         # check directory existence
         check_dir(self.templatePath, self.force)
